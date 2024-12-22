@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeechSynthesisUtterance Example</title>
+</head>
+<body>
+  <h3 style="text-align: center; background-color: yellow;border-radius: 50px;">Text-To-Speech</h3>
+<p><i>I am a tts engine powered by Tadajb Software. I am developed by Tada Musa JB.</i> </p>
+    <h5>Text-to-Speech Demo</h5>
+    <textarea id="text" rows="4" cols="50" placeholder="Type something here..."></textarea><br><br>
+    <button style="background-color: purple; "  onclick="speak()">Speak</button>
+
+    <script>
+        function speak() {
+            const text = document.getElementById('text').value;
+            const speech = new SpeechSynthesisUtterance(text);
+            speech.lang = 'en-US';
+            speech.pitch = 1; 
+            speech.rate = 1;
+            speech.volume = 1; 
+
+            window.speechSynthesis.speak(speech);
+        }
+    </script>
+</body>
+      </html>
+      
