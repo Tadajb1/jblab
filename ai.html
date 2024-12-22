@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    h2{
+      background-color: blue;
+      max-width: 500px;
+      margin: 70px auto;
+      padding: 40px;
+      border: 1px solid #ccc;
+      border-radius: 50px;
+    }
+
+    .chat-container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-header {
+      background-color: #f0f0f0;
+      padding-right: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .chat-messages {
+      padding: 20px;
+    }
+
+    .message {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .message:last-child {
+      border-bottom: none;
+    }
+
+    .chat-input {
+      padding: 10px;
+    }
+
+    #user-input {
+      width: 70%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    #send-btn {
+      width: 20%;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    #send-btn:hover {
+      background-color: #3e8e41;
+    }
+
+    #teach-ai-btn {
+      width: 20%;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    #teach-ai-btn:hover {
+      background-color: #3e8e41;
+    }
+
+    .author {
+      font-weight: bold;
+      color: #666;
+    }
+
+    .author::after {
+      content: ":";
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <h1 style="text-align: center; background-color: yellow;border-radius: 50px;">Chat AI</h1>
+    </div>
+    <div class="chat-messages" id="message-container"></div>
+    <div class="chat-input">
+      <input type="text" id="user-input" placeholder="Type a message...">
+      <button id="send-btn">Send</button>
+      <button id="teach-ai-btn">Teach AI</button>
+    </div>
+  </div>
+  <script>
+    
+
+
+
+window.onload = function() {
+  const userInput = document.getElementById('user-input');
+  const sendBtn = document.getElementById('send-btn');
+  const messageContainer = document.getElementById('message-container');
+  const teachAiBtn = document.getElementById('teach-ai-btn');
+
+  let conversation = [
+    { text: 'Hello! How can I assist you today?', author: 'AI' }
+  ];
+
+  let knowledgeBase = {
+    'hello': 'Hi there!',
+    'how are you': 'I\'m doing well, thanks!',
+    'what is your name': 'I\'m an AI assistant.',
+    'what can you do': 'I can answer questions and learn from user input.',
+    'who created you': 'I was created by a developer.',
+    'what is machine learning': 'Machine learning is a subset of artificial intelligence.',
+    'what is artificial intelligence': 'Artificial intelligence is a broad field of computer science.',
+    'can you write a story': 'Yes, I can generate a story.',
+    'can you write a poem': 'Yes, I can generate a poem.',
+    'can you tell a joke': 'Yes, I can share a joke.',
+    'can you translate languages': 'Yes, I can translate languages.',
+    'can you summarize text': 'Yes, I can summarize text.',
+    'can you answer math questions': 'Yes, I can answer math questions.',
+    'can you answer science questions': 'Yes, I can answer science questions.',
+    'can you answer history questions': 'Yes, I can answer history questions.',
+    'can you answer literature questions': 'Yes, I can answer literature questions.',
+    'can you answer geography questions': 'Yes, I can answer geography questions.',
+    'can you answer sports questions': 'Yes, I can answer sports questions.',
+    'can you answer music questions': 'Yes, I can answer music questions.',
+    'can you answer movie questions': 'Yes, I can answer movie questions.',
+  };
+
+  sendBtn.addEventListener('click', () => {
+    const userMessage = userInput.value.trim();
+    if (userMessage) {
+      conversation.push({ text: userMessage, author: 'User' });
+      const response = getResponse(userMessage);
+      conversation.push({ text: response, author: 'AI' });
+      renderConversation();
+      userInput.value = '';
+    }
+  });
+
+  function getResponse(userMessage) {
+    const lowerCaseMessage = userMessage.toLowerCase();
+    if (knowledgeBase[lowerCaseMessage]) {
+      return knowledgeBase[lowerCaseMessage];
+    } else {
+      return 'I didn\'t understand that. Can you please rephrase?';
+    }
+  }
+
+  function renderConversation() {
+    messageContainer.innerHTML = '';
+    conversation.forEach((message) => {
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('message');
+      messageElement.innerHTML = `
+        <span class="author">${message.author}</span>
+        <p>${message.text}</p>
+      `;
+      messageContainer.appendChild(messageElement);
+    });
+  }
+
+  teachAiBtn.addEventListener('click', () => {
+    const userMessage = userInput.value.trim();
+    if (userMessage) {
+      const response = prompt('Please enter the correct response:');
+      if (response) {
+        learnFromUserInput(userMessage, response);
+        conversation.push({ text: userMessage, author: 'User' });
+        conversation.push({ text: response, author: 'AI' });
+        renderConversation();
+        userInput.value = '';
+      }
+    }
+  });
+
+  function learnFromUserInput(userMessage, response) {
+    const lowerCaseMessage = userMessage.toLowerCase();
+    knowledgeBase[lowerCaseMessage] = response;
+  }
+}
+
+  </script>
+</body>
+</html>
